@@ -1,0 +1,15 @@
+# Virtual environment
+/venv/
+*.pyc
+__pycache__/
+
+# Environment files
+.env
+.env.*
+
+# IDE files
+.idea/
+*.iml
+
+# Flask-Migrate/Alembic cache (if any)
+# .alembic_cache/ (example, might not be standard)

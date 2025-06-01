@@ -6,13 +6,33 @@
     <router-link to="/parking" class="text-white hover:text-secondaryTeal">Parking</router-link>
     <router-link to="/contact" class="text-white hover:text-secondaryTeal">Contact</router-link>
 
-    <template v-if="authState.isLoggedIn">
-      <router-link to="/account/profile" class="text-white hover:text-secondaryTeal">Profile</router-link>
-      <button @click="handleLogout" class="text-white hover:text-secondaryTeal bg-transparent border-none cursor-pointer">Logout</button>
-    </template>
-    <template v-else>
-      <router-link to="/login" class="text-white hover:text-secondaryTeal bg-accentOrange hover:bg-opacity-80 px-3 py-1 rounded-md">Login</router-link>
-    </template>
+    <div class="flex items-center space-x-4 ml-auto"> <!-- Pusher for right alignment of auth links -->
+      <template v-if="authState.isLoggedIn">
+        <router-link
+          v-if="authState.isAdmin"
+          to="/admin/dashboard"
+          class="text-white hover:text-accentOrange px-3 py-1 rounded-md bg-secondaryTeal hover:bg-opacity-90 transition-colors">
+          Admin
+        </router-link>
+        <router-link
+          to="/account/profile"
+          class="text-white hover:text-secondaryTeal">
+          Profile
+        </router-link>
+        <button
+          @click="handleLogout"
+          class="text-white hover:text-secondaryTeal bg-transparent border-none cursor-pointer px-3 py-1">
+          Logout
+        </button>
+      </template>
+      <template v-else>
+        <router-link
+          to="/login"
+          class="text-white hover:text-secondaryTeal bg-accentOrange hover:bg-opacity-80 px-3 py-1 rounded-md">
+          Login
+        </router-link>
+      </template>
+    </div>
   </nav>
 </template>
 
@@ -24,24 +44,19 @@ const router = useRouter();
 
 const handleLogout = () => {
   logoutUser();
-  // Redirect to Home page after logout, or to Login page if preferred
-  router.push({ name: 'Home' });
+  router.push({ name: 'Login' }); // Redirect to Login page after logout
 };
 </script>
 
 <style scoped>
-/* Styling for active router links can be added here or globally */
-/* Using Tailwind's default active class handling with router-link is often sufficient,
-   but custom active styles can be defined if needed. */
 .router-link-exact-active {
-  /* Example: color: #40B0A6; /* Secondary Teal for active, if different from hover */
-  font-weight: bold; /* Or use Tailwind's font-bold class directly in the template */
+  font-weight: bold;
+  /* Example: text-decoration: underline; */
 }
 
-/* Ensure button styling is consistent with links if not using Tailwind button classes */
 button {
-  padding: 0; /* Reset default button padding if any */
-  display: inline-flex; /* Align with links */
+  padding: 0;
+  display: inline-flex;
   align-items: center;
 }
 </style>
